@@ -292,7 +292,7 @@ module GScraper
       #   The URL for the query.
       #
       def search_url
-        url = URI::HTTP.build(:host => search_host, :path => PATH)
+        url = URI::HTTPS.build(:host => search_host, :path => PATH)
 
         set_param = lambda { |param,value|
           url.query_params[param.to_s] = value if value
@@ -386,7 +386,7 @@ module GScraper
       #
       def page(page_index)
         Page.new do |new_page|
-          doc = @agent.get(page_url(page_index))
+          doc = @agent.get(page_url(page_index).to_s)
 
           if doc.at('//div/a[@href="http://www.google.com/support/bin/answer.py?answer=86640"]')
             raise(Blocked,"Google has temporarily blocked our IP Address",caller)
